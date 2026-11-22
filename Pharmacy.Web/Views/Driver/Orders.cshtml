@@ -26,6 +26,7 @@
                         <th>Address</th>
                         <th>Status</th>
                         <th>Amount Due</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
 
@@ -45,6 +46,14 @@
                             <td>@order.Status</td>
                             <td>
                                 @(order.CodAmount?.ToString("0.00") ?? "N/A")
+                            </td>
+                            <td>
+                                <a asp-controller="Driver"
+                                   asp-action="Details"
+                                   asp-route-id="@order.OrderId"
+                                   class="btn btn-primary btn-sm">
+                                    View Details
+                                </a>
                             </td>
                         </tr>
                     }
