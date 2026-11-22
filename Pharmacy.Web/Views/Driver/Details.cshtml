@@ -1,0 +1,33 @@
+@model Pharmacy.DAL.Entities.DriverOrder
+
+@{
+    ViewData["Title"] = "Order Details";
+}
+
+<div class="container mt-4">
+    <h2>Order Details</h2>
+
+    <div class="card mt-3">
+        <div class="card-body">
+            <h5>Order #@Model.OrderId</h5>
+
+            <p><strong>Customer:</strong> @Model.ShippingName</p>
+            <p><strong>Phone:</strong> @Model.ShippingPhone</p>
+            <p><strong>Governorate:</strong> @Model.ShippingGovernorate</p>
+            <p><strong>City:</strong> @Model.ShippingCity</p>
+            <p><strong>District:</strong> @Model.ShippingDistrict</p>
+            <p><strong>Street:</strong> @Model.ShippingStreet</p>
+            <p><strong>Building:</strong> @Model.ShippingBuildingNumber</p>
+            <p><strong>Floor:</strong> @Model.ShippingFloor</p>
+            <p><strong>Apartment:</strong> @Model.ShippingApartment</p>
+            <p><strong>Landmark:</strong> @Model.ShippingLandmark</p>
+            <p><strong>Directions:</strong> @Model.ShippingDirections</p>
+            <p><strong>Status:</strong> @Model.Status</p>
+            <p><strong>Amount Due:</strong> @(Model.CodAmount?.ToString("0.00") ?? "N/A")</p>
+        </div>
+    </div>
+
+    <a asp-controller="Driver" asp-action="Orders" class="btn btn-secondary mt-3">
+        Back to Orders
+    </a>
+</div>
