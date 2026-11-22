@@ -17,7 +17,6 @@ namespace Pharmacy.Web.Controllers
 
         public async Task<IActionResult> Orders()
         {
-            // Get the signed-in driver's ID from their claims
             var driverIdValue =
                 User.FindFirst("DriverId")?.Value ??
                 User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -27,7 +26,6 @@ namespace Pharmacy.Web.Controllers
                 return Unauthorized();
             }
 
-            // Get only orders assigned to this driver
             var orders = await _context.DriverOrders
                 .AsNoTracking()
                 .Where(o => o.DriverId == driverId)
@@ -35,6 +33,30 @@ namespace Pharmacy.Web.Controllers
                 .ToListAsync();
 
             return View(orders);
+        }
+
+        public async Task<IActionResult> Details(long id)
+        {
+            var driverIdValue =
+                User.FindFirst("DriverId")?.Value ??
+                User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (!Guid.TryParse(driverIdValue, out var driverId))
+            {
+                return Unauthorized();
+            }
+
+            var order = await _context.DriverOrders
+                .AsNoTracking()
+                .FirstOrDefaultAsync(o =>
+                    o.OrderId == id && o.DriverId == driverId);
+
+            if (order == null)
+            {
+                return NotFound();
+            }
+
+            return View(order);
         }
     }
 }
